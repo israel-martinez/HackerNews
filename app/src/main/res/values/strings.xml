@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HackerNewsAlgolia</string>
+    <string name="hit_title">Hit title</string>
+    <string name="hit_text">Hit text</string>
 </resources>

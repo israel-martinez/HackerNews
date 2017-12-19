@@ -3,8 +3,11 @@ package com.israel_martinez.hackernewsalgolia.Main;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.israel_martinez.hackernewsalgolia.Adapters.HitsAdapter;
 import com.israel_martinez.hackernewsalgolia.EDA.News;
 import com.israel_martinez.hackernewsalgolia.R;
 import com.israel_martinez.hackernewsalgolia.Services.NewsClient;
@@ -14,18 +17,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private NewsClient newsClient;
+    private ListView hitsListView;
+    private HitsAdapter hitsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         newsClient = ServiceGenerator.createService(NewsClient.class);
+        hitsListView = findViewById(R.id.hits_listView);
 
         loadNews();
-
-
     }
 
     public void loadNews(){
@@ -37,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 try{
                     if(newsResponse != null){
                         Toast.makeText(MainActivity.this, "nbhits: " + newsResponse.getNbHits(), Toast.LENGTH_SHORT).show();
+                        hitsAdapter = new HitsAdapter(MainActivity.this, R.layout.hits_row, newsResponse.getHits());
+                        hitsListView.setAdapter(hitsAdapter);
+                        hitsListView.setOnItemClickListener(MainActivity.this);
                     }else{
                         Toast.makeText(MainActivity.this, "Failed to get News!", Toast.LENGTH_SHORT).show();
                     }
@@ -53,12 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.hello_world:{
-                loadNews();
-                break;
-            }
-        }
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
     }
 }
