@@ -13,8 +13,24 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/javaCompile.lock" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/taskHistory.bin" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/taskJars.bin" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-06-08-190.rawproto" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-06-28-410.rawproto" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-06-57-747.rawproto" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-08-09-310.rawproto" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-08-16-033.rawproto" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-08-34-995.rawproto" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-09-04-072.rawproto" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/israel_martinez/hackernewsalgolia/Adapters/HitsAdapter.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/anim/fade_in.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/anim/fade_out.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hits_row.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-06-08-190.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-06-28-410.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-06-57-747.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-08-09-310.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-08-16-033.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-08-34-995.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-22-09-04-072.json" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-20-12-11-550.json" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-20-12-11-550.rawproto" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2017-12-18-20-12-22-287.json" afterPath="" />
