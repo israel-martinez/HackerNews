@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HackerNewsAlgolia</string>
+    <string name="app_name">Hacker News! by Algolia</string>
     <string name="hit_title">Hit title</string>
     <string name="hit_text">Hit text</string>
     <string name="not_charge_list">The news could not be uploaded &#8230;</string>
