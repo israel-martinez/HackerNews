@@ -1,5 +1,6 @@
 package com.israel_martinez.hackernewsalgolia.Main;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.israel_martinez.hackernewsalgolia.EDA.News;
 import com.israel_martinez.hackernewsalgolia.R;
 import com.israel_martinez.hackernewsalgolia.Services.NewsClient;
 import com.israel_martinez.hackernewsalgolia.Services.ServiceGenerator;
+import com.israel_martinez.hackernewsalgolia.WebView.WebViewActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private NewsClient newsClient;
     private ListView hitsListView;
     private HitsAdapter hitsAdapter;
-
+    private News news;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 News newsResponse = response.body();
                 try{
                     if(newsResponse != null){
-                        Toast.makeText(MainActivity.this, "nbhits: " + newsResponse.getNbHits(), Toast.LENGTH_SHORT).show();
+                        news = newsResponse;
                         hitsAdapter = new HitsAdapter(MainActivity.this, R.layout.hits_row, newsResponse.getHits());
                         hitsListView.setAdapter(hitsAdapter);
                         hitsListView.setOnItemClickListener(MainActivity.this);
@@ -54,13 +56,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failed to chargue the news", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Failed to charge the news", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+        //String url = "https://hn.algolia.com/?query=&sort=byPopularity&prefix&page=0&dateRange=all&type=story";
+        Object storyUrl =  news.getHits().get(position).getStoryUrl();
+        String url = null;
+        if(storyUrl != null){
+            url = storyUrl.toString();
+        }
+        intent.putExtra("url", url);
+
+        Toast.makeText(MainActivity.this, "url: " + url,
+                Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
 }
