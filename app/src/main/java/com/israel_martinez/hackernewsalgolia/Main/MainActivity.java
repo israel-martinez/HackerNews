@@ -1,6 +1,8 @@
 package com.israel_martinez.hackernewsalgolia.Main;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,10 +22,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener{
     private NewsClient newsClient;
     private ListView hitsListView;
     private TextView textView;
+    private SwipeRefreshLayout swipeLayout;
     private HitsAdapter hitsAdapter;
     private News news;
     @Override
@@ -35,7 +39,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         textView = findViewById(R.id.list_state);
         textView.setVisibility(View.INVISIBLE);
 
+        swipeLayout = findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(MainActivity.this);
+        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         loadNews();
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                swipeLayout.setRefreshing(false);
+            }
+        }, 5000);
+
+        loadNews();
+        Toast.makeText(MainActivity.this, "On refresh list!", Toast.LENGTH_SHORT).show();
     }
 
     public void loadNews(){
@@ -64,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
