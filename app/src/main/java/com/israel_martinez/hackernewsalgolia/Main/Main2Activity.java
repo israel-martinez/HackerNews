@@ -13,13 +13,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -52,8 +52,7 @@ import retrofit2.Response;
  * The interesting parts are drawing while items are animating to their new positions after some items is removed
  * and a possibility to undo the removal.
  */
-public class Main2Activity extends AppCompatActivity implements  AdapterView.OnItemClickListener,
-        SwipeRefreshLayout.OnRefreshListener{
+public class Main2Activity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     RecyclerView mRecyclerView;
 
@@ -62,8 +61,8 @@ public class Main2Activity extends AppCompatActivity implements  AdapterView.OnI
     private TextView textView;
     private TextView hitTextView;
     private SwipeRefreshLayout swipeLayout;
-    private HitsAdapter hitsAdapter;
     private static News news = new News();
+    private Animation animClickable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +77,7 @@ public class Main2Activity extends AppCompatActivity implements  AdapterView.OnI
         loadNews();
         storageNews();
 
-
         mRecyclerView = findViewById(R.id.recycler_view);
-        //setUpRecyclerView(); //calling in loadNews
 
         swipeLayout = findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(Main2Activity.this);
@@ -88,6 +85,8 @@ public class Main2Activity extends AppCompatActivity implements  AdapterView.OnI
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        animClickable = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.clicked);
     }
 
     @Override
@@ -340,12 +339,6 @@ public class Main2Activity extends AppCompatActivity implements  AdapterView.OnI
         });
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
@@ -497,14 +490,16 @@ public class Main2Activity extends AppCompatActivity implements  AdapterView.OnI
 
         public TestViewHolder(ViewGroup parent) {
             super(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_view, parent, false));
-            titleTextView = (TextView) itemView.findViewById(R.id.hit_title);
-            hitTextView = (TextView) itemView.findViewById(R.id.hit_text);
-            undoButton = (Button) itemView.findViewById(R.id.undo_button);
+            titleTextView = itemView.findViewById(R.id.hit_title);
+            hitTextView = itemView.findViewById(R.id.hit_text);
+            undoButton = itemView.findViewById(R.id.undo_button);
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    itemView.startAnimation(animClickable);
                     Intent intent = new Intent(v.getContext(), WebViewActivity.class);
-                    //String url = "https://hn.algolia.com/?query=&sort=byPopularity&prefix&page=0&dateRange=all&type=story";
                     Object storyUrl =  news.getHits().get(getPosition()).getStoryUrl();
                     String url = null;
                     if(storyUrl != null){
@@ -517,6 +512,7 @@ public class Main2Activity extends AppCompatActivity implements  AdapterView.OnI
                     startActivity(intent);
                 }
             });
+
         }
     }
 
