@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.israel_martinez.hackernewsalgolia.Adapters.HitsAdapter;
@@ -22,6 +23,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private NewsClient newsClient;
     private ListView hitsListView;
+    private TextView textView;
     private HitsAdapter hitsAdapter;
     private News news;
     @Override
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         newsClient = ServiceGenerator.createService(NewsClient.class);
         hitsListView = findViewById(R.id.hits_listView);
+        textView = findViewById(R.id.list_state);
+        textView.setVisibility(View.INVISIBLE);
 
         loadNews();
     }
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         hitsListView.setAdapter(hitsAdapter);
                         hitsListView.setOnItemClickListener(MainActivity.this);
                     }else{
-                        Toast.makeText(MainActivity.this, "Failed to get News!", Toast.LENGTH_SHORT).show();
+                        textView.setVisibility(View.VISIBLE);
                     }
                 }catch(Error e){
                     e.printStackTrace();
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failed to charge the news", Toast.LENGTH_SHORT).show();
+                textView.setVisibility(View.VISIBLE);
             }
         });
     }
