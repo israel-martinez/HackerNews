@@ -16,7 +16,10 @@ import com.israel_martinez.hackernewsalgolia.EDA.News;
 import com.israel_martinez.hackernewsalgolia.R;
 import com.israel_martinez.hackernewsalgolia.Services.NewsClient;
 import com.israel_martinez.hackernewsalgolia.Services.ServiceGenerator;
+import com.israel_martinez.hackernewsalgolia.Storage.InternalStorage;
 import com.israel_martinez.hackernewsalgolia.WebView.WebViewActivity;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +50,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 android.R.color.holo_red_light);
 
         loadNews();
+        storageNews();
     }
+
+
 
     @Override
     public void onRefresh() {
@@ -58,7 +64,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }, 5000);
 
         loadNews();
+        textView.setVisibility(View.INVISIBLE);
         Toast.makeText(MainActivity.this, "On refresh list!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void storageNews() {
+        if (news != null){
+            try {
+                InternalStorage.writeObject(MainActivity.this, "last_news", news);
+            } catch (IOException e) {
+                e.printStackTrace();
+                readNews();
+            }
+        }
+    }
+
+    public void readNews(){
+        try {
+            Object readObject = InternalStorage.readObject(MainActivity.this, "last_news");
+            if(readObject != null){
+                news = (News) readObject;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadNews(){
@@ -75,9 +106,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         hitsListView.setOnItemClickListener(MainActivity.this);
                     }else{
                         textView.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "Charging storage news ...", Toast.LENGTH_SHORT).show();
+                        readNews();
+                        textView.setVisibility(View.INVISIBLE);
                     }
                 }catch(Error e){
                     e.printStackTrace();
+                    textView.setVisibility(View.VISIBLE);
                 }
             }
 
