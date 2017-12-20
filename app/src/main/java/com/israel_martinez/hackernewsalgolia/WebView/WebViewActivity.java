@@ -32,13 +32,22 @@ public class WebViewActivity extends AppCompatActivity {
         textView.setVisibility(View.INVISIBLE);
 
         String url = getIntent().getStringExtra("url");
+        String comment = getIntent().getStringExtra("comment");
+
         if(url != null){
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(url);
         }else{
-            webView.setVisibility(View.INVISIBLE);
-            textView.setVisibility(View.VISIBLE);
-            textView.startAnimation(animFadeIn);
+            if(comment != null){
+                textView.setVisibility(View.VISIBLE);
+                textView.setText(comment);
+                webView.setVisibility(View.INVISIBLE);
+            }else{
+                webView.setVisibility(View.INVISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                textView.startAnimation(animFadeIn);
+                textView.setText("Post without Url and comment ...");
+            }
         }
 
     }

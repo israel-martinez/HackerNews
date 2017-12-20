@@ -501,14 +501,26 @@ public class Main2Activity extends AppCompatActivity implements SwipeRefreshLayo
                     itemView.startAnimation(animClickable);
                     Intent intent = new Intent(v.getContext(), WebViewActivity.class);
                     Object storyUrl =  news.getHits().get(getPosition()).getStoryUrl();
-                    String url = null;
-                    if(storyUrl != null){
-                        url = storyUrl.toString();
-                    }
-                    intent.putExtra("url", url);
+                    Object commentText = news.getHits().get(getPosition()).getCommentText();
 
-                    Toast.makeText(v.getContext(), "url: " + url,
-                            Toast.LENGTH_SHORT).show();
+                    String url = null;
+                    String comment = null;
+
+                    if(storyUrl != null){url = storyUrl.toString();}
+                    if(commentText != null){comment =  commentText.toString();}
+
+
+                    intent.putExtra("url", url);
+                    intent.putExtra("comment", comment);
+
+                    if(url != null){
+                        Toast.makeText(v.getContext(), "Loading url: " + url,
+                                Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(v.getContext(), "Loading comment: " + comment,
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                     startActivity(intent);
                 }
             });
