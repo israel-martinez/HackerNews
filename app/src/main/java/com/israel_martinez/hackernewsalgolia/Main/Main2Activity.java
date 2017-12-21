@@ -99,7 +99,8 @@ public class Main2Activity extends AppCompatActivity implements SwipeRefreshLayo
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_item_undo_checkbox) {
             item.setChecked(!item.isChecked());
-            ((TestAdapter)mRecyclerView.getAdapter()).setUndoOn(item.isChecked());
+            if(mRecyclerView.getAdapter() != null)
+                ((TestAdapter)mRecyclerView.getAdapter()).setUndoOn(item.isChecked());
         }
         return super.onOptionsItemSelected(item);
     }
